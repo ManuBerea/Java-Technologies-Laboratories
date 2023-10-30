@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Apply CSS styles to the table and its elements */
+        .project-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .project-table th, .project-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .project-table th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style the card container */
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            max-width: 800px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h1 style="text-align: center; color: #333; margin: 20px 0;">Projects Management</h1>
+
+    <h:form id="projectForm">
+        <div class="card">
+            <!-- Button to open the dialog -->
+            <p:commandButton value="Add Project" oncomplete="PF('projectDialog').show();" icon="pi pi-plus" />
+            <p:outputPanel id="projectsTablePanel">
+                <p:dataTable var="project" value="#{projectBean.allProjects}" class="project-table">
+                    <p:column headerText="Project ID">
+                        <h:outputText value="#{project.id}" />
+                    </p:column>
+                    <p:column headerText="Project Name">
+                        <h:outputText value="#{project.name}" />
+                    </p:column>
+                    <p:column headerText="Project Deadline">
+                        <h:outputText value="#{project.deadline}" />
+                    </p:column>
+                    <p:column headerText="Category">
+                        <h:outputText value="#{project.category}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputLabel for="description" value="#{project.description}" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Delete" icon="pi pi-trash" action="#{projectBean.deleteProject(project.id)}" update="projectForm:projectsTablePanel"  >
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+        </div>
+    </h:form>
+
+    <!-- Dialog for adding a new project -->
+    <p:dialog header="Add Project" widgetVar="projectDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form>
+            <!-- Add project input fields here -->
+            <p:inputText id="projectName" value="#{projectBean.projectName}" placeholder="Enter project name" />
+
+            <h:inputTextarea id="description" value="#{projectBean.projectDescription}"  placeholder="Enter project description" rows="6" cols="30" />
+
+            <p:calendar id="projectDeadline" value="#{projectBean.projectDeadline}" showOn="button" pattern="MM/dd/yyyy" placeholder="Select project deadline" />
+            <p:selectOneMenu id="projectCategory" value="#{projectBean.projectCategory}">
+                <f:selectItem itemLabel="Select category" itemValue="" />
+                <f:selectItem itemLabel="Category 1" itemValue="Category 1" />
+                <f:selectItem itemLabel="Category 2" itemValue="Category 2" />
+                <!-- Add more categories as needed -->
+            </p:selectOneMenu>
+
+
+            <!-- Button to save the new project -->
+            <p:commandButton value="Save" action="#{projectBean.addProject}" oncomplete="PF('projectDialog').hide(); enableAddProjectButton();" update="projectForm:projectsTablePanel"/>
+
+            <script>
+                function enableAddProjectButton() {
+                    var addButton = document.querySelector("button[id*='projectForm:projectsTablePanel:0:addProjectButton']");
+                    if (addButton) {
+                        addButton.disabled = false;
+                    }
+                }
+            </script>
+        </h:form>
+
+    </p:dialog>
+</h:body>
+</html>

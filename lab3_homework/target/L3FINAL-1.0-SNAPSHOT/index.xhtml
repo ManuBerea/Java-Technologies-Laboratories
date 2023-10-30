@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>PrimeFaces Project Creation</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h2>Project Creation</h2>
+
+        <!-- Name Input -->
+        <p:inputText id="name" value="#{project.name}" placeholder="Enter the project name" />
+
+        <!-- Category Dropdown -->
+<!--        <p:selectOneMenu id="category" value="#{project.selectedCategory}">-->
+<!--            <f:selectItem itemValue="Select Category" itemLabel="Select Category" />-->
+<!--            <f:selectItems value="#{project.selectedCategory}" />-->
+<!--        </p:selectOneMenu>-->
+        <p:inputText id="category" value="#{project.category}" placeholder="Enter the category for the project" />
+
+        <!-- Create Project Button -->
+        <p:commandButton value="Create Project" action="#{project.createProject}" update="outputPanel" />
+
+        <br />
+
+        <!-- Output Panel -->
+        <p:outputPanel id="outputPanel">
+            <h:outputText value="Project #{project.name} created!" rendered="#{not empty project.name}" />
+            <h:outputText value="Category: #{project.category}" rendered="#{not empty project.category}" />
+        </p:outputPanel>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .project-table th, .project-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .project-table th {
+            background-color: #e9e9e9;
+            font-weight: bold;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            max-width: 800px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form id="projectForm">
+        <div class="container">
+            <h1>Projects Management Dashboard</h1>
+
+            <div class="toolbar">
+                <p:commandButton value="New Project" oncomplete="PF('projectDialog').show()" icon="pi pi-plus" styleClass="add-btn" />
+            </div>
+
+            <p:dataTable var="project" value="#{projectBean.allProjects}" styleClass="project-table" id="projectsTable">
+                <p:column headerText="ID">
+                    <h:outputText value="#{project.id}" />
+                </p:column>
+                <p:column headerText="Name">
+                    <h:outputText value="#{project.name}" />
+                </p:column>
+                <p:column headerText="Deadline">
+                    <h:outputText value="#{project.deadline}" />
+                </p:column>
+                <p:column headerText="Category">
+                    <h:outputText value="#{project.category}" />
+                </p:column>
+                <p:column headerText="Description">
+                    <h:outputText value="#{project.description}" />
+                </p:column>
+                <p:column styleClass="action-col">
+                    <p:commandButton value="Delete" icon="pi pi-trash" action="#{projectBean.deleteProject(project.id)}" update=":projectForm:projectsTable" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:form>
+
+    <p:dialog header="Create New Project" widgetVar="projectDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" styleClass="project-dialog">
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="projectName" value="Name: " />
+                <p:inputText id="projectName" value="#{projectBean.projectName}" required="true" requiredMessage="Project name is required." />
+
+                <h:outputLabel for="description" value="Description: " />
+                <p:inputTextarea id="description" value="#{projectBean.projectDescription}" required="true" requiredMessage="Project description is required." />
+
+                <h:outputLabel for="projectDeadline" value="Deadline: " />
+                <p:calendar id="projectDeadline" value="#{projectBean.projectDeadline}" pattern="MM/dd/yyyy" showOn="button" required="true" requiredMessage="Project deadline is required." />
+
+                <h:outputLabel for="projectCategory" value="Category: " />
+                <p:selectOneMenu id="projectCategory" value="#{projectBean.projectCategory}" required="true" requiredMessage="Project category is required.">
+                    <f:selectItem itemLabel="Select Category" noSelectionOption="true" />
+                    <f:selectItem itemLabel="Category 1" itemValue="Category 1" />
+                    <f:selectItem itemLabel="Category 2" itemValue="Category 2" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:commandButton value="Save" action="#{projectBean.addProject}" oncomplete="PF('projectDialog').hide();" update=":projectForm:projectsTable" />
+        </h:form>
+    </p:dialog>
+</h:body>
+</html>

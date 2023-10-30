@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Apply CSS styles to the table and its elements */
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .student-table th, .student-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .student-table th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style the card container */
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            max-width: 800px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h1 style="text-align: center; color: #333; margin: 20px 0;">Users from the database</h1>
+
+    <h:form id="myForm">
+        <div class="card">
+            <!-- Button to open the dialog -->
+            <p:commandButton value="Add Student" oncomplete="PF('studentDialog').show();" icon="pi pi-plus" />
+            <p:outputPanel id="studentTablePanel">
+                <p:dataTable id="studentTable" var="student" value="#{studentBean.allStudents}" class="student-table">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{student.id}" />
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{student.name}" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Show Associated Projects" oncomplete="PF('projectDialog').show()"
+                                         action="#{studentBean.showAssociatedProjects(student.id)}" update="associatedProjectsForm:projectsTablePanel" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Add Projects" action="#{studentBean.showAssociatedProjects(student.id)}" oncomplete="PF('associationDialog').show();" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Delete" icon="pi pi-trash" action="#{studentBean.deleteStudent(student.id)}" update="myForm:studentTablePanel"  >
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+        </div>
+    </h:form>
+
+    <!-- Dialog for adding a new student -->
+    <p:dialog header="Add Student" widgetVar="studentDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form>
+            <!-- Add student input fields here -->
+            <p:inputText id="name" value="#{studentBean.name}" placeholder="Enter your name" />
+
+            <!-- Button to save the new student -->
+            <p:commandButton value="Save" action="#{studentBean.addStudent}" oncomplete="PF('studentDialog').hide(); enableAddStudentButton();" update="myForm:studentTablePanel"  />
+            <script>
+                function enableAddStudentButton() {
+                    var addButton = document.querySelector("button[id*='myForm:studentTablePanel:0:addStudentButton']");
+                    if (addButton) {
+                        addButton.disabled = false;
+                    }
+                }
+            </script>
+        </h:form>
+    </p:dialog>
+
+    <p:confirmDialog header="Confirm Deletion" widgetVar="confirmationDialog">
+        <p:commandButton value="Yes" oncomplete="PF('confirmationDialog').hide();" action="#{studentBean.deleteStudent(studentBean.selectedStudentId)}" process="@this" update="myForm:studentTablePanel" />
+        <p:commandButton value="No" oncomplete="PF('confirmationDialog').hide();" />
+    </p:confirmDialog>
+
+    <h:form id="associatedProjectsForm">
+        <p:dialog header="Associated Projects" widgetVar="projectDialog" resizable="false" modal="true"
+                  showEffect="fade" hideEffect="fade">
+            <p:outputPanel id="projectsTablePanel">
+                <p:dataTable var="project" value="#{studentBean.associatedProjects}" class="project-table">
+                    <p:column headerText="Project ID">
+                        <h:outputText value="#{project.id}" />
+                    </p:column>
+                    <p:column headerText="Project Name">
+                        <h:outputText value="#{project.name}" />
+                    </p:column>
+                    <p:column headerText="Project Deadline">
+                        <h:outputText value="#{project.deadline}" />
+                    </p:column>
+                    <p:column headerText="Category">
+                        <h:outputText value="#{project.category}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputLabel value="#{project.description}" />
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+        </p:dialog>
+    </h:form>
+
+    <p:dialog header="Add Projects for student #{studentBean.selectedStudentId}" widgetVar="associationDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form>
+            <p:dataTable id="projectTable" var="project" value="#{projectBean.allProjects}">
+                <p:column headerText="Project Name">
+                    <h:outputText value="#{project.name}" />
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Add" action="#{studentBean.addProjectToStudent(project.name)}" onstart="this.disabled=true;" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:dialog>
+
+</h:body>
+</html>
