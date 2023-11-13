@@ -14,3 +14,9 @@ Există două clase principale: ProjectBean și StudentBean, fiecare responsabil
 ProjectBean: Se ocupă de crearea, ștergerea și afișarea proiectelor. Proiectele sunt stocate într-o bază de date, iar clasa interacționează cu aceasta prin JDBC pentru a executa operațiunile necesare. Utilizatorii pot adăuga proiecte noi, vizualiza toate proiectele existente și șterge proiecte existente.
 StudentBean: Similar cu ProjectBean, această clasă gestionează studenții, oferind funcționalități pentru adăugarea, ștergerea și afișarea studenților. De asemenea, oferă funcționalitate pentru afișarea proiectelor asociate unui student și adăugarea unui proiect unui student.
 Interfața utilizator este gestionată prin pagini XHTML, care utilizează JSF pentru a afișa datele și a interacționa cu utilizatorul. Se folosesc componente specifice JSF, cum ar fi tabele de date, formulare modale și componente pentru selecția datelor.
+
+# Tema 4:
+Această temă combină crearea și structurarea paginilor web cu JSF și template-uri XHTML, și implementarea eficientă a conexiunilor la baza de date. 
+Pagina principală "page.xhtml" stabilește structura generală a site-ului, incluzând un "header", conținutul și un "footer" prin template-uri separate. 
+"dataView.xhtml" este folosită pentru vizualizarea datelor în liste sau tabele, iar "dataEdit.xhtml" pentru editarea datelor printr-un formular sau dialoguri modale.
+Conexiunile la baza de date sunt gestionate prin utilizarea unui "connection pool" și a obiectelor de tip DataSource, configurate și injectate în bean-urile StudentBean si ProjectBean, care accesează și procesează datele. 
