@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Students</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .p-dataTable {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .p-dataTable th, .p-dataTable td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .p-dataTable th {
+            background-color: #b400d4;
+            color: #fff;
+        }
+        .p-dataTable th:last-child,
+        .p-dataTable td:last-child {
+            text-align: right;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form>
+        <div class="container">
+            <h1>Students List</h1>
+            <p:dataTable var="student" value="#{studentController.getAllStudents()}" emptyMessage="No students found"
+                         styleClass="p-dataTable">
+                <p:column headerText="Student Name">
+                    <h:outputText value="#{student.name}" />
+                </p:column>
+
+                <p:column headerText="Actions">
+                    <p:commandButton value="Delete" icon="pi pi-times" action="#{studentController.deleteStudent(student.student_id)}" update="@form"/>
+                </p:column>
+            </p:dataTable>
+
+            <h1>Projects List</h1>
+            <p:dataTable var="project" value="#{projectController.getAllProjects()}" emptyMessage="No projects found"
+                         styleClass="p-dataTable">
+                <p:column headerText="Project ID">
+                    <h:outputText value="#{project.project_id}" />
+                </p:column>
+
+                <p:column headerText="Project Name">
+                    <h:outputText value="#{project.name}" />
+                </p:column>
+
+                <p:column headerText="Project Category">
+                    <h:outputText value="#{project.category}" />
+                </p:column>
+
+                <p:column headerText="Project Description">
+                    <h:outputText value="#{project.description}" />
+                </p:column>
+
+                <p:column headerText="Project Deadline">
+                    <h:outputText value="#{project.deadline}" />
+                </p:column>
+
+                <p:column headerText="Actions">
+                    <p:commandButton value="Delete" icon="pi pi-times" action="#{projectController.deleteProject(project.project_id)}" update="@form" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:form>
+</h:body>
+</html>
