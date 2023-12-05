@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Assign Projects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .form-field select,
+        .form-field input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-field input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-field input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="form-container">
+        <h:form>
+            <h1>Project Assignment</h1>
+
+            <div class="form-field">
+                <h:outputLabel value="Select Student: " for="studentSelect" />
+                <h:selectOneMenu id="studentSelect" value="#{projectController.selectedStudentId}">
+                    <f:selectItem itemLabel="-- Select Student --" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{studentController.allStudents}" var="student"
+                                   itemLabel="#{student.name}" itemValue="#{student.student_id}" />
+                </h:selectOneMenu>
+            </div>
+
+            <div class="form-field">
+                <h:outputLabel value="Select Project: " for="projectSelect" />
+                <h:selectManyCheckbox id="projectSelect" value="#{projectController.selectedProjects}">
+                    <f:selectItems value="#{projectController.availableProjects}" var="project"
+                                   itemLabel="#{project.name}" itemValue="#{project.project_id}" />
+                </h:selectManyCheckbox>
+            </div>
+
+            <div class="form-field">
+                <h:commandButton value="Assign Selected Projects" action="#{projectController.assignSelectedProjectsToStudent}" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
