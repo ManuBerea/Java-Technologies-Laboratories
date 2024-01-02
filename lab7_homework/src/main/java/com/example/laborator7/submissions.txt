@@ -1,0 +1,8 @@
+Registration Number: 75ea3b34-9b70-459f-8eb2-edc9daae5ddf, User: manu, Day of Week: Thursday, Hour of Day: 8:00-10:00, Submission Time: Thu Dec 14 21:52:30 EET 2023
+Registration Number: a7f72e03-064c-44b4-88e3-70423a22d3c9, User: manu, Day of Week: Friday, Hour of Day: 14:00-16:00, Submission Time: Thu Dec 14 21:52:35 EET 2023
+Registration Number: 4673331a-6b7c-4b4c-9c0e-80c303be7445, Teacher: manu, Day: Tuesday, Time Frame: 18:00-20:00, Submission Time: Thu Dec 14 22:26:13 EET 2023
+Registration Number: 8c080795-5ec4-4c68-92df-cd8c26dd39d8, Teacher: lola, Day: Wednesday, Time Frame: 10:00-12:00, Submission Time: Thu Dec 14 22:28:50 EET 2023
+Registration Number: 77c91e9b-f067-4ad5-8501-18f5409bb521, Teacher: manu, Day: Tuesday, Time Frame: 12:00-14:00, Submission Time: Fri Dec 15 00:36:30 EET 2023
+Registration Number: 9202533e-2cdd-4632-878e-7cd933629881, Teacher: manu, Day: Wednesday, Time Frame: 16:00-18:00, Submission Time: Fri Dec 15 08:07:16 EET 2023
+Registration Number: e63d568a-4c8f-4fdf-8d2a-216fc1c8ccc4, Teacher: cici, Day: Friday, Time Frame: 18:00-20:00, Submission Time: Fri Dec 15 09:33:27 EET 2023
+Registration Number: 399dbf20-d197-45c2-810c-ec5da75b7fab, Teacher: teacher, Day: Monday, Time Frame: 16:00-18:00, Submission Time: Fri Dec 15 09:40:55 EET 2023

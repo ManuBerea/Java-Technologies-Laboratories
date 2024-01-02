@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Login</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .header, .footer, .form-title, .form-panel p, .form-panel button, .signup-link {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .header {
+            background-color: #1E3A2B;
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+            margin-top: auto;
+            font-size: 20px;
+        }
+
+        .footer {
+            background-color: rgba(27, 66, 44, 0.62);
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            margin-top: auto;
+            font-size: 15px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-panel {
+            background-color: #fff;
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form-title {
+            color: #1E3A2B;
+            font-size: 35px;
+            text-align: center;
+            margin-bottom: 35px;
+            margin-top: -30px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px #ccc;
+            letter-spacing: 1px;
+        }
+
+        .form-panel p {
+            margin-bottom: 3px;
+        }
+
+        .form-panel .errors {
+            color: rgba(154, 11, 11, 0.55);
+        }
+
+        .form-panel label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-panel input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-panel button {
+            background-color: rgba(33, 70, 47, 0.62);
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .form-panel button:hover {
+            background-color: rgba(33, 70, 47, 0.8);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .signup-link a {
+            color: rgba(33, 70, 47, 0.62);
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</h:head>
+<h:body>
+
+    <div class="header">
+        <ui:insert name="header">
+            <ui:include src="/WEB-INF/header.xhtml"/>
+        </ui:insert>
+    </div>
+
+    <div class="main-content">
+        <h:form style="margin-top: 10px;">
+            <div class="form-panel">
+                <div class="form-title">Login</div>
+
+                <p:outputLabel for="username">Username</p:outputLabel>
+                <p:inputText value="#{userBean.username}" id="username"
+                             required="true" requiredMessage="You must enter a username"/>
+
+                <p:outputLabel for="password">Password</p:outputLabel>
+                <p:password value="#{userBean.password}" id="password"
+                            required="true" requiredMessage="You must enter a password"/>
+
+                <p:messages id="errors" styleClass="errors"/>
+
+                <p:commandButton value="Login" update="@form" action="#{userController.login()}" />
+
+            </div>
+            <div class="signup-link">
+                New user? <a href="register.xhtml">Signup</a>
+            </div>
+        </h:form>
+    </div>
+
+    <div class="footer">
+        <ui:insert name="footer">
+            <ui:include src="/WEB-INF/footer.xhtml"/>
+        </ui:insert>
+    </div>
+
+</h:body>
+</html>
