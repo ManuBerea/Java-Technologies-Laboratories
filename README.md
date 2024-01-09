@@ -34,7 +34,7 @@ Clasa TimetableSubmissionService definește endpoint-urile RESTful pentru opera�
 TimetableController gestionează interacțiunea cu interfața utilizatorului și apelează serviciile RESTful, utilizând un client JAX-RS pentru a comunica cu TimetableSubmissionService.
 Aplicația include și un filtru de cache (CacheSubmissionsFilter), care eficientizează gestionarea cererilor GET prin stocarea temporară a datelor și resetează cache-ul la modificări (POST, PUT, DELETE). Acesta accelerează accesul la informații, servind datele direct din cache odată ce acesta este populat.
 
-Tema 9:
+# Tema 9:
 Această temă adaugă securitate la aplicația web existentă, folosind funcționalități Java EE. Autentificarea se realizează prin JDBC Realm (initial, in Payara au fost configurate toate datele necesare), implementata prin formularele de autentificare din login.xhtml, care trimit cererile de autentificare si validare către j_security_check. 
 Clasa UserController gestionează procesul de autentificare, înregistrare a utilizatorilor cu parole criptate prin SecurityUtil (criptate SHA-256 pentru a se potrivi cu configurarea Realm din Payara) și redirecționarea în funcție de rolul utilizatorului (admin sau user). De asemenea, include funcții pentru verificarea stării de autentificare și logout. 
 Securitatea accesului la resursele web este controlată în web.xml prin restricții bazate pe roluri, cu pagini dedicate pentru erori de logare și acces respins. Mai exact, daca un untilizator cu rol de "user" de exemplu incearca sa acceseza o resursa specifica unui utilizator cu rol "admin", acesta va fi redirectat catre pagina de AccessDenied.xhtml. 
