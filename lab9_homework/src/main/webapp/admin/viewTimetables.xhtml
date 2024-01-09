@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>View Timetables as Admin</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .header, .footer, .form-panel p, .form-panel button, .form-panel a, .form-panel label, .form-panel input, .form-panel select {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .header {
+            background-color: #1E3A2B;
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .footer {
+            background-color: rgba(27, 66, 44, 0.62);
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            margin-top: auto;
+            font-size: 15px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .panel-grid {
+            margin: auto;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-style {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .table-style th, .table-style td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .table-style th {
+            background-color: #eeeeee;
+        }
+
+        .not-authorized {
+            color: rgba(154, 11, 11, 0.8);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logout-button {
+            background-color: rgba(33, 70, 47, 0.62);
+            color: #fff;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: rgba(33, 70, 47, 0.8);
+        }
+
+        .delete-button {
+            background-color: rgba(33, 70, 47, 0.62); /* Change this to the desired color */
+            color: #fff; /* Text color */
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #cc0000; /* Change this to the desired hover color */
+        }
+
+
+    </style>
+</h:head>
+
+<h:body>
+    <div class="header">
+        <ui:insert name="header">
+            <ui:include src="/WEB-INF/header.xhtml"/>
+        </ui:insert>
+    </div>
+
+    <div class="main-content">
+        <h:form id="firstForm" rendered="#{request.isUserInRole('admin')}">
+            <h:messages id="globalMessages" globalOnly="true" layout="table" showSummary="false" showDetail="true"/>
+
+            <div class="panel-grid">
+                <p:dataTable id="timetable" styleClass="table-style"
+                             value="#{timetableController.getAllTimetablePreferences()}" var="timetable" border="1" lazy="false">
+                    <p:column>
+                        <f:facet name="header">Id</f:facet>
+                        #{timetable.id}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Proposed by:</f:facet>
+                        #{timetable.teacher.username}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Course name</f:facet>
+                        #{timetable.content}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Day</f:facet>
+                        #{timetable.dayOfWeek}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Time frame</f:facet>
+                        #{timetable.hourOfDay}
+                    </p:column>
+                    <p:column headerText="Action">
+                        <p:commandButton value="Edit" update=":editForm" oncomplete="PF('editDialog').show()"
+                                         actionListener="#{timetableController.prepareEdit(timetable)}" />
+                        <p:commandButton value="Delete" action="#{timetableController.deleteTimetable(timetable.id)}" update="@form" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <p:dialog header="Edit Timetable" widgetVar="editDialog" modal="true" id="editDlg">
+            <h:form id="editForm">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="content" value="Course Name:" />
+                    <h:inputText id="content" value="#{timetableController.selectedTimetable.content}" />
+
+                    <h:outputLabel for="dayOfWeek" value="Day:" />
+                    <h:selectOneMenu id="dayOfWeek" value="#{timetableController.selectedTimetable.dayOfWeek}">
+                        <f:selectItem itemLabel="Select a Day" itemValue="" />
+                        <f:selectItem itemLabel="Monday" itemValue="Monday" />
+                        <f:selectItem itemLabel="Tuesday" itemValue="Tuesday" />
+                        <f:selectItem itemLabel="Wednesday" itemValue="Wednesday" />
+                        <f:selectItem itemLabel="Thursday" itemValue="Thursday" />
+                        <f:selectItem itemLabel="Friday" itemValue="Friday" />
+                        <f:selectItem itemLabel="Saturday" itemValue="Saturday" />
+                        <f:selectItem itemLabel="Sunday" itemValue="Sunday" />
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="hourOfDay" value="Time Frame:" />
+                    <h:selectOneMenu id="hourOfDay" value="#{timetableController.selectedTimetable.hourOfDay}">
+                        <f:selectItem itemLabel="Select a Time Frame" itemValue="" />
+                        <f:selectItem itemLabel="8:00-10:00" itemValue="8:00-10:00" />
+                        <f:selectItem itemLabel="10:00-12:00" itemValue="10:00-12:00" />
+                        <f:selectItem itemLabel="12:00-14:00" itemValue="12:00-14:00" />
+                        <f:selectItem itemLabel="14:00-16:00" itemValue="14:00-16:00" />
+                        <f:selectItem itemLabel="16:00-18:00" itemValue="16:00-18:00" />
+                        <f:selectItem itemLabel="18:00-20:00" itemValue="18:00-20:00" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+
+                <p:commandButton value="Update" action="#{timetableController.updateTimetable()}" update=":firstForm" oncomplete="PF('editDialog').hide()" />
+            </h:form>
+        </p:dialog>
+
+
+        <div style="position: fixed; bottom: 80px; right: 30px;">
+            <h:form rendered="#{not empty request.remoteUser}">
+                <h:commandButton value="Logout" action="#{userController.logout}" styleClass="logout-button"/>
+            </h:form>
+        </div>
+
+        <h:panelGroup rendered="#{not request.isUserInRole('admin')}">
+            <h:outputText styleClass="not-authorized" value="You are not authorized to view this content."/>
+        </h:panelGroup>
+    </div>
+
+    <div class="footer">
+        <ui:insert name="footer">
+            <ui:include src="/WEB-INF/footer.xhtml"/>
+        </ui:insert>
+    </div>
+
+</h:body>
+
+</html>

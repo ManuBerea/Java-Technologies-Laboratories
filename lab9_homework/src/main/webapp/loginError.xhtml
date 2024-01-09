@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<head>
+    <title>Login Error</title>
+    <style type="text/css">
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: rgba(154, 11, 11, 0.55);
+            background-color: #FFD2D2;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(154, 11, 11, 0.55);
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h:outputText value="Login failed. Please try again." styleClass="error-message" />
+    <a href="login.xhtml">Back to Login</a>
+</div>
+</body>
+
+</html>
