@@ -27,7 +27,7 @@ Această temă demonstrează implementarea unei aplicații web bazată pe Java E
 # Tema 6:
 Această temă vizează restructurarea stratului de acces la date al aplicației existente, folosind EJB pentru a implementa repository-uri și gestionarea tranzacțiilor. Se folosesc trei tipuri de bean-uri: un stateless session bean pentru verificarea disponibilității proiectelor, un stateful session bean pentru asignarea proiectelor și un singleton session bean care menține o hartă în memorie a asignărilor curente. Modificările în modelul aplicației permit ca un student să primească mai multe proiecte, în timp ce un proiect poate fi asignat la cel mult un student. Pagina "assign" permite asignarea manuală a proiectelor, integrând logica de business prin bean-urile EJB. Tranzacțiile sunt gestionate de EJB, asigurând atomicitatea asignărilor: toate proiectele sunt asignate cu succes sau tranzacția este inversată. Singleton bean-ul actualizează harta asignărilor la fiecare schimbare, oferind o viziune centralizată asupra stării curente a asignărilor.
 
-# Tema 7:
+# Tema 8:
 Aceasta tema continua laboratorul anterior si implementeaza un serviciu Web RESTful pentru gestionarea orarelor, utilizând JAX-RS și JPA. 
 Prin clasa ApplicationConfig, se configurează serviciile RESTful ale aplicației și se stabilește calea de bază "/api". 
 Clasa TimetableSubmissionService definește endpoint-urile RESTful pentru operațiuni CRUD asupra orarelor (metodele createTimetable, updateTimetable, deleteTimetable, getAllTimetables și getTimetablesByUserId implementează adăugarea, actualizarea, ștergerea și citirea datelor). Serviciile produc și consumă date de tip JSON. De asemenea se folosesc anotări OpenAPI pentru a documenta serviciile, cum ar fi @ApiOperation și @ApiResponses. 
